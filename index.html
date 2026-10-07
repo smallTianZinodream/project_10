@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>YOLO 行人检测</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>YOLO 行人检测</h1>
+        <p class="sub">YOLOv9-C · 只画人，不把车当行人</p>
+      </div>
+      <span class="chip" id="runtimeChip">WASM / WebGPU</span>
+    </header>
+
+    <main>
+      <aside>
+        <section>
+          <h2>输入</h2>
+          <div class="btn-row">
+            <label class="btn">
+              上传图片
+              <input id="fileInput" type="file" accept="image/*" hidden />
+            </label>
+            <button class="btn" id="camBtn" type="button">打开摄像头</button>
+          </div>
+          <div class="samples" id="samples"></div>
+        </section>
+
+        <section>
+          <h2>检测</h2>
+          <label class="slider">
+            <span>行人置信度 <b id="thrLabel">0.35</b></span>
+            <input id="threshold" type="range" min="0.15" max="0.85" step="0.05" value="0.35" />
+          </label>
+          <p class="status" id="status">正在加载 YOLOv9…</p>
+          <div class="progress" hidden id="progressWrap">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>这一帧</h2>
+          <dl class="stats">
+            <div>
+              <dt>行人</dt>
+              <dd id="count">—</dd>
+            </div>
+            <div>
+              <dt>耗时</dt>
+              <dd id="ms">—</dd>
+            </div>
+          </dl>
+        </section>
+      </aside>
+
+      <section class="stage">
+        <canvas id="canvas"></canvas>
+        <p class="placeholder" id="placeholder">等待图像</p>
+        <video id="video" playsinline muted hidden></video>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
